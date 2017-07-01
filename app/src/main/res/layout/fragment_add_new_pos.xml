@@ -1,0 +1,65 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context="com.br.positivityapp.fragments.AddNewPosFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Description"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView6"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/border_edit_text"
+            android:gravity="top|left"
+            android:inputType="textMultiLine"
+            android:lines="10"
+            android:minLines="6"
+            android:padding="10dp"
+            android:scrollbars="vertical" />
+
+        <CheckBox
+            android:id="@+id/checkBoxAddLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Adicionar local"
+            android:layout_below="@+id/editText"
+            android:layout_centerHorizontal="true" />
+
+        <fragment
+                android:id="@+id/mapAdd"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_below="@+id/checkBoxAddLocation"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                tools:context="com.googlemap.googlemap.MapsActivity" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/mapAdd"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:text="save" />
+
+
+    </RelativeLayout>
+
+</FrameLayout>

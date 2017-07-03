@@ -35,6 +35,11 @@ public class MainActivity extends AppCompatActivity {
     public SectionsPagerAdapter mSectionsPagerAdapter;
     public TabLayout tabLayout;
 
+    static final int SETTINGSACTIVITYCODE = 1;
+    static final int SETTINGSACTIVITYCODELOGOUT = 999;
+
+
+
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -63,6 +68,17 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == SETTINGSACTIVITYCODE) {
+            // Make sure the request was successful
+            if (resultCode == SETTINGSACTIVITYCODELOGOUT) {
+                finish();
+            }
+        }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -81,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Intent i = new Intent(this,SettingsActivity.class);
-            startActivity(i);
+            startActivityForResult(i, SETTINGSACTIVITYCODE);
             return true;
         }
 

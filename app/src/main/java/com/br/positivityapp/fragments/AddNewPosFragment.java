@@ -108,8 +108,18 @@ public class AddNewPosFragment extends Fragment implements OnMapReadyCallback {
                     Location location = getLastKnownLocation();
                     LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
 
-                    latitude = userLocation.latitude;
-                    longitude = userLocation.longitude;
+                    if (location != null) {
+                        Log.e("TAG", "GPS is on");
+                        latitude = location.getLatitude();
+                        longitude = location.getLongitude();
+                    }
+                    else{
+                        //This is what you need:
+                        latitude = userLocation.latitude;
+                        longitude = userLocation.longitude;
+                    }
+
+
 
                     // Creating a marker
                     MarkerOptions markerOptions = new MarkerOptions();

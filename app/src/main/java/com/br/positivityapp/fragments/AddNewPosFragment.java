@@ -2,6 +2,7 @@ package com.br.positivityapp.fragments;
 
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -106,68 +107,14 @@ public class AddNewPosFragment extends Fragment implements OnMapReadyCallback {
 
                 if (checkBoxAddLocation.isChecked()) {
                     Location location = getLastKnownLocation();
-                    LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
-
                     if (location != null) {
-                        Log.e("TAG", "GPS is on");
-                        latitude = location.getLatitude();
-                        longitude = location.getLongitude();
-                    }
-                    else{
-                        //This is what you need:
-                        latitude = userLocation.latitude;
-                        longitude = userLocation.longitude;
+                        getLocation(location);
+                        Toast.makeText(buttonView.getContext(), "Clique no mapa para posicionar o pino", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(buttonView.getContext(), "Por favor, Habilite a localização", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
                     }
 
-
-
-                    // Creating a marker
-                    MarkerOptions markerOptions = new MarkerOptions();
-
-                    // Setting the position for the marker
-                    markerOptions.position(userLocation);
-
-                    // Setting the title for the marker.
-                    // This will be displayed on taping the marker
-                    markerOptions.title("Localizacão do Evento: " + userLocation.latitude + " : " + userLocation.longitude);
-
-                    // Clears the previously touched position
-                    mMap.clear();
-
-                    // Animating to the touched position
-                    mMap.animateCamera(CameraUpdateFactory.newLatLng(userLocation));
-
-                    // Placing a marker on the touched position
-                    mMap.addMarker(markerOptions);
-
-                    // Listener to place a marker when the map is clicked.
-                    mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-                        @Override
-                        public void onMapClick(LatLng latLng) {
-                            // Creating a marker
-                            MarkerOptions markerOptions = new MarkerOptions();
-
-                            // Setting the position for the marker
-                            markerOptions.position(latLng);
-
-                            // Setting the title for the marker.
-                            // This will be displayed on taping the marker
-                            markerOptions.title("Localizacão do Evento: " + latLng.latitude + " : " + latLng.longitude);
-
-                            // Clears the previously touched position
-                            mMap.clear();
-
-                            // Animating to the touched position
-                            mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-
-                            // Placing a marker on the touched position
-                            mMap.addMarker(markerOptions);
-
-                            latitude = latLng.latitude;
-                            longitude = latLng.longitude;
-                        }
-                    });
-                    Toast.makeText(buttonView.getContext(), "Clique no mapa para posicionar o pino", Toast.LENGTH_SHORT).show();
                 } else {
                     mMap.setOnMapClickListener(null);
                     mMap.clear();
@@ -184,6 +131,69 @@ public class AddNewPosFragment extends Fragment implements OnMapReadyCallback {
         mMap = map;
     }
 
+    public void getLocation(Location location) {
+        LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
+
+        if (location != null) {
+            Log.e("TAG", "GPS is on");
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+        }
+        else{
+            //This is what you need:
+            latitude = userLocation.latitude;
+            longitude = userLocation.longitude;
+        }
+
+
+
+        // Creating a marker
+        MarkerOptions markerOptions = new MarkerOptions();
+
+        // Setting the position for the marker
+        markerOptions.position(userLocation);
+
+        // Setting the title for the marker.
+        // This will be displayed on taping the marker
+        markerOptions.title("Localizacão do Evento: " + userLocation.latitude + " : " + userLocation.longitude);
+
+        // Clears the previously touched position
+        mMap.clear();
+
+        // Animating to the touched position
+        mMap.animateCamera(CameraUpdateFactory.newLatLng(userLocation));
+
+        // Placing a marker on the touched position
+        mMap.addMarker(markerOptions);
+
+        // Listener to place a marker when the map is clicked.
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                // Creating a marker
+                MarkerOptions markerOptions = new MarkerOptions();
+
+                // Setting the position for the marker
+                markerOptions.position(latLng);
+
+                // Setting the title for the marker.
+                // This will be displayed on taping the marker
+                markerOptions.title("Localizacão do Evento: " + latLng.latitude + " : " + latLng.longitude);
+
+                // Clears the previously touched position
+                mMap.clear();
+
+                // Animating to the touched position
+                mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+
+                // Placing a marker on the touched position
+                mMap.addMarker(markerOptions);
+
+                latitude = latLng.latitude;
+                longitude = latLng.longitude;
+            }
+        });
+    }
 
     @Override
     public void onResume() {
